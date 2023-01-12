@@ -36,3 +36,12 @@
 .product__price {
     margin-top: 5px;
 }
+
+
+.checked {
+    color: orange;
+}
+
+.product__rating {
+    display: flex;
+}
