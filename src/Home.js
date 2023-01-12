@@ -12,7 +12,6 @@ function Home(props) {
                 alt=""
             />
 
-            
             <div className="home__row">
                 {/* {Product} */}
                 <Product 

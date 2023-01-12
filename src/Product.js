@@ -17,12 +17,13 @@ function Product({title, image, price, rating}) {
                     .fill()
                     .map((_,i) => (
                     <p>
-                    <span class="fa fa-star checked"></span></p>
+                    🌟
+                    </p>
                 ))}
             </div>  
         </div>
         {<img 
-            src={image} alt=""/>
+            src={image} alt="image"/>
 }
         <button>
             Add to basket
