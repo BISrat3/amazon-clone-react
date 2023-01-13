@@ -2,6 +2,12 @@ export const initialState ={
     basket: [], 
 }
 
+// Selector 
+export const getBasketTotal = (basket) =>
+    // the purpose of reducer is map through basket - 
+    basket?.reduce((amount, item) => item.price + amount, 0)
+
+
 // state and action - do you want to update or delete from the basket
 const reducer = (state, action) => {
     console.log(action)
