@@ -19,8 +19,32 @@ const reducer = (state, action) => {
                 ...state,
                 basket: [...state.basket, action.item], 
             }
+
+        case "REMOVE_FROM_BASKET" : 
+        // return whatever the state is previously
+        // change in the basket
+        
+               const index = state.basket.findIndex(
+                (basketItem) => basketItem.id === action.id
+               )
+            // we're gonna copy the basket in temporary variable currently had
+                let newBasket = [...state.basket];
+
+                if (index >= 0){
+                    // cutting it by one
+                    newBasket.splice(index, 1)
+                    
+                } else {
+                    console.warn(`can't remove product( id: ${action.id}) as its not in basket`)
+            }
+
+            return {
+                ...state,
+                basket: newBasket
+            }
+
         default: 
-        return state;
+            return state;
     }
 }
 
