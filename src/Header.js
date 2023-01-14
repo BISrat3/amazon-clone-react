@@ -30,28 +30,30 @@ function Header() {
                 className="header__searchIcon"/>
         </div>
         <div className="header__nav">
-            <div className='header__option'>
-                <span className='header__optionLineOne'>
+            <Link to="/login">
+                <div className='header__option'>
+                    <span className='header__optionLineOne'>
                         Hello Guest
-                </span>
-                <span className='header__optionLineTwo'>
-                       Signin
-                </span>
-            </div>
+                    </span>
+                    <span className='header__optionLineTwo'>
+                        Signin
+                    </span>
+                </div>
+            </Link>
             <div className='header__option'>
                 <span className='header__optionLineOne'>
-                        Returns
+                    Returns
                 </span>
                 <span className='header__optionLineTwo'>&
-                         Orders
+                    Orders
                 </span>
             </div>
             <div className='header__option'>
                 <span className='header__optionLineOne'>
-                        Your
+                    Your
                 </span>
                 <span className='header__optionLineTwo'>
-                        Prime
+                    Prime
                 </span>
             </div>
             <Link to="/Checkout">
