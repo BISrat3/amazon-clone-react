@@ -1,20 +1,41 @@
 import React, {useState} from 'react'
 import './Login.css'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { auth } from "./firebase"
 
 function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+
+  // to pull data programmatically change the url
+  const history = useHistory()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   
 
-  const signin = (e) => {
+  const signIn = (e) => {
     // preventing the page from refresh
     e.preventDefault()
     console.log("e.target")
-    
+    auth.signInWithEmailAndPassword(email, password)
+      .then(auth => {
+        history.push('/')
+      })
+      .catch((error) => alert(error.message))
   }
-  const register =(e) => {
+  const register = e => {
     e.preventDefault()
+    // it create user with email and password
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      // it will comeback auth object if everything is smooth
+      .then((auth) => {
+        // it successfully created a new user with email and password
+        // console.log(auth)
+        if (auth){
+          // inside the history used to pushing to redirecting to different url
+          history.push('/')
+        }
+      })
+      .catch((error) => alert(error.message))
   }
 
   return (
@@ -31,26 +52,29 @@ function Login() {
           <form>
             <h5>E-mail</h5>
             <input 
-              type="text" value={email}
+              type="text" 
+              value={email}
                // when ever the user entered on this element
               // as the user type in it will ma[ to the value]
-              onChange={e => setEmail(e.target.value) } />
+              onChange={(e) => setEmail(e.target.value) } />
             <h5>Password</h5>
             <input 
-              type="password" value={password} 
-              onChange={ e => setPassword(e.target.value)}
+              type="password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)}
              />
             <button 
               className='login__signInButton'
               type="submit" 
-              onClick={signin}>Sign In</button>
+              onClick={signIn}>Sign In</button>
           </form>
           <p>
           By signing-in you agree to the AMAZON FAKE CLONE Conditions of Use & Sale. Please see our Privacy Notice, our Cookies Notice and our Interest-Based Ads Notice.
           </p>
           <button 
             className='login__registerButton'
-            type="submit" onClick={register}> Create your Amazon Account</button>
+            onClick={register}> Create your Amazon Account
+          </button>
       </div>
     </div>
   )
