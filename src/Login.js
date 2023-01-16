@@ -16,7 +16,7 @@ function Login() {
     e.preventDefault()
     console.log("e.target")
     auth.signInWithEmailAndPassword(email, password)
-      .then(auth => {
+      .then((auth) => {
         history.push('/')
       })
       .catch((error) => alert(error.message))
@@ -24,8 +24,7 @@ function Login() {
   const register = e => {
     e.preventDefault()
     // it create user with email and password
-    auth
-      .createUserWithEmailAndPassword(email, password)
+    auth.createUserWithEmailAndPassword(email, password)
       // it will comeback auth object if everything is smooth
       .then((auth) => {
         // it successfully created a new user with email and password

@@ -24,9 +24,9 @@ const reducer = (state, action) => {
         // return whatever the state is previously
         // change in the basket
         
-               const index = state.basket.findIndex(
+            const index = state.basket.findIndex(
                 (basketItem) => basketItem.id === action.id
-               )
+            )
             // we're gonna copy the basket in temporary variable currently had
                 let newBasket = [...state.basket];
 
@@ -42,7 +42,11 @@ const reducer = (state, action) => {
                 ...state,
                 basket: newBasket
             }
-
+        case 'SET_USER':
+            return {
+                ...state,
+                user: action.user
+            }
         default: 
             return state;
     }
