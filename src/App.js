@@ -12,13 +12,17 @@ function App() {
   // listener 
   const [{user}, dispatch] = useStateValue();
 	useEffect(() => {
+    // will only runs once when the app component loads...
 		auth.onAuthStateChanged((authUser) => {
+      console.log('The User is >>', authUser)
 			if (authUser) {
+        // the user just logged in/ the user was logged in
 				dispatch({
 					type: "SET_USER",
 					user: authUser,
 				});
 			} else {
+        // the user is logged out
 				dispatch({
 					type: "SET_USER",
 					user: null,

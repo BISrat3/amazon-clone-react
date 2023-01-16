@@ -4,7 +4,6 @@ import { Link, useHistory } from 'react-router-dom'
 import { auth } from "./firebase"
 
 function Login() {
-
   // to pull data programmatically change the url
   const history = useHistory()
   const [email, setEmail] = useState("")

@@ -1,6 +1,6 @@
 export const initialState ={
     basket: [], 
-    user: [],
+    user: null,
 }
 
 // Selector 
