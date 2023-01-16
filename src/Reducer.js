@@ -1,5 +1,6 @@
 export const initialState ={
     basket: [], 
+    user: [],
 }
 
 // Selector 
@@ -23,7 +24,6 @@ const reducer = (state, action) => {
         case "REMOVE_FROM_BASKET" : 
         // return whatever the state is previously
         // change in the basket
-        
             const index = state.basket.findIndex(
                 (basketItem) => basketItem.id === action.id
             )

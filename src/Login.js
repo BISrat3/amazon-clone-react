@@ -12,7 +12,7 @@ function Login() {
   
 
   const signIn = (e) => {
-    // preventing the page from refresh
+    // event the page from refreshing
     e.preventDefault()
     console.log("e.target")
     auth.signInWithEmailAndPassword(email, password)
@@ -45,6 +45,7 @@ function Login() {
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png" 
             alt=""/>
       </Link>
+
       <div
         className='login__container'>
           <h1>Sign-in</h1>
@@ -54,8 +55,9 @@ function Login() {
               type="text" 
               value={email}
                // when ever the user entered on this element
-              // as the user type in it will ma[ to the value]
+              // as the user type in it will mp[ to the value]
               onChange={(e) => setEmail(e.target.value) } />
+
             <h5>Password</h5>
             <input 
               type="password" 
@@ -67,6 +69,7 @@ function Login() {
               type="submit" 
               onClick={signIn}>Sign In</button>
           </form>
+
           <p>
           By signing-in you agree to the AMAZON FAKE CLONE Conditions of Use & Sale. Please see our Privacy Notice, our Cookies Notice and our Interest-Based Ads Notice.
           </p>
