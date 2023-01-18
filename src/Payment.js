@@ -2,31 +2,38 @@ import React from 'react'
 import CheckoutProduct from './CheckoutProduct'
 import "./Payment.css"
 import { useStateValue } from './StateProvider'
+import {Link} from "react-router-dom"
 
 function Payment() {
   const [{basket, user}, dispatch] = useStateValue()
+  
   return (
     <div className='payment'>
       <div className='payment__container'>
         {/* payment section */}
-        <div className='payment_section'>
+        <h1>
+          Checkout (
+            <Link to="/checkout">{basket?.length}items</Link>
+          )
+        </h1>
+        <div className='payment__section'>
           <div className='payment__title'>
             <h3>Delivery address</h3>
           </div>
           <div className='payment__address'>
             <p>{user?.email}</p>
-            <p>12322 REact Lane</p>
+            <p>12322 React Lane</p>
             <p>Los Angeles, CA</p>
           </div>
         </div>
 
         {/* Reviewing action */}
-        <div className='payment_section'>
+        <div className='payment__section'>
           <div className='payment__title'>
             <h3>Review items and delivery</h3>
           </div>
           <div className='payment__items'>
-            {basket.map ((item) => (
+            {basket.map((item) => (
               <CheckoutProduct 
                 id={item.id}
                 title={item.title}
@@ -39,12 +46,12 @@ function Payment() {
         </div>
 
         {/* the actual payment method */}
-        <div className='payment_section'>
+        <div className='payment__section'>
           <div className='payment__title'>
-            <h3>Review items and delivery</h3>
+            <h3>Payment Method</h3>
           </div >
-          <div className='payment__address'>
-
+          <div className='payment__details'>
+              {/* Stripe magic */}
           </div>
         </div>
       </div>
