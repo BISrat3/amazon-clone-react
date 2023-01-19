@@ -52,6 +52,7 @@ function App() {
           <Home/> 
         </Route  >
         <Route path='/orders'>
+          <Header />
           <Orders/>
         </Route>
         <Route path='/payment'>

@@ -23,11 +23,13 @@ function Payment() {
 
   useEffect(() =>{
     // generate the special stripe secret which allows us to change a customer.
+    // 
     const getClientSecret = async () => {
       // we can make post or get request
       const response = await axios({
         method: 'post',
-        // stripe expects the total in a currencies submit:
+        // stripe expects the total in a currencies subunits:
+        // if you are using dollar it expects you to change it into cents
         url: `/payments/create?total=${getBasketTotal(basket) * 100}`
       })
       setClientSecret(response.data.clientSecret)
@@ -49,9 +51,11 @@ function Payment() {
         card: elements.getElement(CardElement)
       }
       // because it is promise something will comeback
-      // some we destructing - it is stripe payment confirmation built in
+      // some we destructing - it is stripe payment confirmation built in which is promise
     }).then(({paymentIntent}) => {
       // payment intent = payment confirmation
+      
+      // if everthing is correct or true
       setSucceeded(true)
       setError(null)
       setProcessing(false)
@@ -59,7 +63,6 @@ function Payment() {
       dispatch({
         type: 'EMPTY_BASKET'
       })
-      
       history.replace('/orders')
     })
   }
