@@ -1,30 +1,28 @@
-import React, {useState, useEffect} from 'react'
-import CheckoutProduct from './CheckoutProduct'
+import React, {useState, useEffect} from "react"
 import "./Payment.css"
-import { useStateValue } from './StateProvider'
-import {Link, useHistory} from "react-router-dom"
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import { useStateValue } from "./StateProvider"
+import { Link, useHistory } from "react-router-dom"
+import CheckoutProduct from './CheckoutProduct'
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import CurrencyFormat from 'react-currency-format'
-import axios from 'axios'
-import {db} from "./firebase"
+import axios from './axios'
+import { db } from "./firebase"
 
-function Payment() {
-  const [{basket, user}, dispatch] = useStateValue()
+const Payment = () => {
   const history = useHistory()
-  const [processing, setProcessing] = useState('')
-  const [succeeded, setSucceeded] = useState(false)
-  const [error, setError] = useState(null)
-  const [disabled, setDisabled]= useState(true)
-  const [clientSecret, setClientSecret]= useState(true)
-
-
+  const [{basket, user}, dispatch] = useStateValue()
   const getBasketTotal = (basket) =>
-		basket.reduce((amount, item) => item.price + amount, 0);
-
+    basket.reduce((amount, item) => item.price + amount, 0);
   const stripe = useStripe()
   const elements = useElements()
-
-  useEffect(() =>{
+  const [error, setError] = useState(null)
+  const [disabled, setDisabled]= useState(true)
+  const [succeeded, setSucceeded] = useState(false)
+  const [processing, setProcessing] = useState('')
+  const [clientSecret, setClientSecret]= useState(true)
+  
+  
+  useEffect(() => {
     // generate the special stripe secret which allows us to change a customer.
     // 
     const getClientSecret = async () => {
@@ -38,12 +36,9 @@ function Payment() {
       setClientSecret(response.data.clientSecret)
     }
     getClientSecret()
-
   }, [basket])
 
   console.log("secret", clientSecret)
-
-
 
   const handleSubmit = async (e) => {
     // do all 
@@ -53,7 +48,7 @@ function Payment() {
     // it uses client secret which is central 
     const payload = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
-        card: elements.getElement(CardElement)
+        card: elements.getElement(CardElement),
       }
       // because it is promise something will comeback
       // some we destructing - it is stripe payment confirmation built in which is promise
@@ -62,20 +57,19 @@ function Payment() {
 
       db
         .collection('users')
-        .doc(user?.id)
+        .doc(user?.uid)
         .collection('orders')
         .doc(paymentIntent.id)
         .set({
           basket: basket, 
           amount: paymentIntent.amount,
           // this will give us the time stamp of the payment that we did
-          created: paymentIntent.created,
+          created: paymentIntent.created
         })
       // if everthing is correct or true
       setSucceeded(true)
       setError(null)
       setProcessing(false)
-
       dispatch({
         type: 'EMPTY_BASKET'
       })
@@ -98,9 +92,7 @@ function Payment() {
       <div className='payment__container'>
         {/* payment section */}
         <h1>
-          Checkout (
-            <Link to="/checkout">{basket?.length}items</Link>
-          )
+          Checkout (<Link to="/checkout">{basket?.length}items</Link>)
         </h1>
         <div className='payment__section'>
           <div className='payment__title'>
@@ -143,10 +135,7 @@ function Payment() {
                 <div className='payemnt__priceContainer'>
                   <CurrencyFormat
                     renderText={(value) => 
-                      <p>
-                         <h3>Order Total: {value}</h3>
-                      </p>
-                    }
+                         <h3>Order Total: {value}</h3>}
                     decimalScale={2}
                     value={getBasketTotal(basket)}
                     displayType={"text"}
@@ -155,7 +144,7 @@ function Payment() {
                   />
                   <button 
                     disabled={processing || disabled || succeeded}>
-                      <span>{processing ? <p>Processing</p>: "Buy now"}</span>
+                      <span>{processing ? <p>Processing</p> : "Buy now"}</span>
                   </button>
                 </div>
                 {/* {Err0r} */}
