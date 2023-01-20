@@ -5,10 +5,10 @@ import { useStateValue } from './StateProvider'
 import {Link, useHistory} from "react-router-dom"
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import CurrencyFormat from 'react-currency-format'
-import {getBasketTotal} from './reducer'
 import axios from 'axios'
 
 function Payment() {
+  const [{basket, user}, dispatch] = useStateValue()
   const history = useHistory()
   const [processing, setProcessing] = useState('')
   const [succeeded, setSucceeded] = useState(false)
@@ -16,7 +16,9 @@ function Payment() {
   const [disabled, setDisabled]= useState(true)
   const [clientSecret, setClientSecret]= useState(true)
 
-  const [{basket, user}, dispatch] = useStateValue()
+
+  const getBasketTotal = (basket) =>
+		basket.reduce((amount, item) => item.price + amount, 0);
 
   const stripe = useStripe()
   const elements = useElements()
@@ -30,13 +32,15 @@ function Payment() {
         method: 'post',
         // stripe expects the total in a currencies subunits:
         // if you are using dollar it expects you to change it into cents
-        url: `/payments/create?total=${getBasketTotal(basket) * 100}`
+        url: `/payments/create?total=${getBasketTotal(basket) * 100}`,
       })
       setClientSecret(response.data.clientSecret)
     }
     getClientSecret()
 
   }, [basket])
+
+  console.log("secret", clientSecret)
 
   console.log("The Secret is >> ", clientSecret)
 
@@ -54,7 +58,7 @@ function Payment() {
       // some we destructing - it is stripe payment confirmation built in which is promise
     }).then(({paymentIntent}) => {
       // payment intent = payment confirmation
-      
+
       // if everthing is correct or true
       setSucceeded(true)
       setError(null)
@@ -126,11 +130,11 @@ function Payment() {
                 <CardElement  onChange={handleChange}/>
                 <div className='payemnt__priceContainer'>
                   <CurrencyFormat
-                    renderText={(value) => (
+                    renderText={(value) => 
                       <p>
                          <h3>Order Total: {value}</h3>
                       </p>
-                    )}
+                    }
                     decimalScale={2}
                     value={getBasketTotal(basket)}
                     displayType={"text"}

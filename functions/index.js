@@ -27,17 +27,19 @@ response.status(200).send('hello'))
 app.post('/payments/create', async(request, response)=> {
     const total = request.query.total;
 
-    console.log('payment resquest recieved!! for this amoun>>', total)
+    console.log('payment request recieved!! for this amount>>', total)
 
     const paymentIntent = await stripe.paymentIntents.create({
         amount: total,  // submits of the currency 
         currency: "usd",
     })
-    // OK - Created
+    // 201 means response is OK - Created
     response.status(201).send({
-        clientSecret: paymentIntent.client.secret,
+        clientSecret: paymentIntent.client_secret,
     })
 })
 
 // -listen command
 exports.api = functions.https.onRequest(app)
+
+// http://127.0.0.1:5001/challenge-12a45/us-central1/api
