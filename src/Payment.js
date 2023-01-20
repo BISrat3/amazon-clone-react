@@ -6,6 +6,7 @@ import {Link, useHistory} from "react-router-dom"
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import CurrencyFormat from 'react-currency-format'
 import axios from 'axios'
+import {db} from "./firebase"
 
 function Payment() {
   const [{basket, user}, dispatch] = useStateValue()
@@ -42,7 +43,7 @@ function Payment() {
 
   console.log("secret", clientSecret)
 
-  console.log("The Secret is >> ", clientSecret)
+
 
   const handleSubmit = async (e) => {
     // do all 
@@ -59,6 +60,17 @@ function Payment() {
     }).then(({paymentIntent}) => {
       // payment intent = payment confirmation
 
+      db
+        .collection('users')
+        .doc(user?.id)
+        .collection('orders')
+        .doc(paymentIntent.id)
+        .set({
+          basket: basket, 
+          amount: paymentIntent.amount,
+          // this will give us the time stamp of the payment that we did
+          created: paymentIntent.created,
+        })
       // if everthing is correct or true
       setSucceeded(true)
       setError(null)

@@ -4,7 +4,7 @@ const express = require("express")
 const cors = require('cors')
 const stripe = require('stripe')
 (
-    'sk_test_51MRgNYEFQAbHNks3myzPzOWn9pNfxogMjzj7qNISJBHh9mvPWiW9gsgR1ZqfX2UbKrHtfnIf5nE1Pq5wY80T3jyD00QoXRzKD1'
+   'sk_test_51MSLJnLVu0QffixoyP6cFdu2Y3eR1hy1MpWDQXTCkmXM9tZjHOK3nRLVO62KST00m52YRikausmluHSoCI0xX5cU000DjCoEiJ'
 )
 
 // API
@@ -30,7 +30,7 @@ app.post('/payments/create', async(request, response)=> {
     console.log('payment request recieved!! for this amount>>', total)
 
     const paymentIntent = await stripe.paymentIntents.create({
-        amount: total,  // submits of the currency 
+        amount: total,  // subunits of the currency 
         currency: "usd",
     })
     // 201 means response is OK - Created
