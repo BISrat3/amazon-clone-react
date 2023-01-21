@@ -55,16 +55,15 @@ const Payment = () => {
     }).then(({paymentIntent}) => {
       // payment intent = payment confirmation
 
-      db
-        .collection('users')
+      db.collection('users')
         .doc(user?.uid)
         .collection('orders')
         .doc(paymentIntent.id)
         .set({
-          basket: basket, 
-          amount: paymentIntent.amount,
-          // this will give us the time stamp of the payment that we did
-          created: paymentIntent.created
+            basket: basket, 
+            amount: paymentIntent.amount,
+            // this will give us the time stamp of the payment that we did
+            created: paymentIntent.created
         })
       // if everthing is correct or true
       setSucceeded(true)
@@ -148,7 +147,7 @@ const Payment = () => {
                   </button>
                 </div>
                 {/* {Err0r} */}
-                {error &&< div>{error}</div> }
+                {error && < div>{error}</div> }
               </form>
           </div>
         </div>

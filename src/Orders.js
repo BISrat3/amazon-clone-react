@@ -5,24 +5,25 @@ import { useStateValue } from './StateProvider'
 import Order from './Order'
 
 function Orders() {
-  const [orders, setOrders] = useState([])
   const [{basket, user}, dispatch ] = useStateValue()
+  const [orders, setOrders] = useState([])
 
   useEffect(()=>{
     if(user) {
-      db
-      .collection('users')
-      .doc(user?.uid)
-      .collection('orders')
-      .orderBy('created', 'desc')
-      // this gives you the row time snapshot from the database 
-      .onSnapshot(snapshot => (
-        // snaphot.doc is going to list or mapping to all order pages
-        setOrders(snapshot.docs.map(doc =>({
-        id: doc.id,
-        data: doc.data()
-        })))
-      ))
+      db.collection('users')
+        .doc(user?.uid)
+        .collection('orders')
+        .orderBy('created', 'desc')
+        // this gives you the row time snapshot from the database 
+        .onSnapshot((snapshot) => 
+          // snaphot.doc is going to list or mapping to all order pages
+          setOrders(
+            snapshot.docs.map((doc) =>({
+              id: doc.id,
+              data: doc.data()
+            }))
+         )
+        )
     } else {
       setOrders([])
     }
@@ -32,7 +33,7 @@ function Orders() {
     <div className='orders'>
         <h1>Orders</h1>
         <div className='orders_order'>
-          {orders?.map(order => (
+          {orders?.map((order) => (
             <Order order={order}/>
           ))}
         </div>
