@@ -20,6 +20,7 @@ function Login() {
       })
       .catch((error) => alert(error.message))
   }
+
   const register = e => {
     e.preventDefault()
     // it create user with email and password
@@ -29,7 +30,7 @@ function Login() {
         // it successfully created a new user with email and password
         // console.log(auth)
         if (auth){
-          // inside the history used to pushing to redirecting to different url
+          // inside the history used to pushing to redirecting to different or forcing to redirect
           history.push('/')
         }
       })

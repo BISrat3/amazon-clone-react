@@ -21,6 +21,7 @@ function App() {
   const [{user}, dispatch] = useStateValue();
 	useEffect(() => {
     // will only runs once when the app component loads...
+    // as soon as we attach this listener - like observer listener 
 		auth.onAuthStateChanged((authUser) => {
       console.log('The User is >>', authUser)
 			if (authUser) {
@@ -42,15 +43,15 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Route exact path="/login">
-            <Login />
-        </Route>
         <Route exact path="/">
           {/* {Header} */}
           <Header />
           {/* {Home} */}
           <Home/> 
         </Route  >
+        <Route exact path="/login">
+            <Login />
+        </Route>
         <Route path='/orders'>
           <Header />
           <Orders/>
@@ -62,7 +63,6 @@ function App() {
           </Elements>
         </Route>
         <Route exact path="/Checkout">
-          {/* <Header/> */}
           <Header />
           <Checkout/>
         </Route>
