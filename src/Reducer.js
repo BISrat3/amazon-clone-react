@@ -50,6 +50,7 @@ const reducer = (state, action) => {
             }
         case 'SET_USER':
             return {
+                // everything currently we have inside the state 
                 ...state,
                 user: action.user
             }
