@@ -1,6 +1,6 @@
 import React from "react";
 import "./Product.css";
-import { useStateValue } from "./StateProvider";
+import { useStateValue } from "../../StateProvider";
 
 function Product({ id, title, image, price, rating }) {
   // dispatch is how do we manipualte the data

@@ -3,8 +3,8 @@ import "./Header.css";
 import SearchIcon from "@mui/icons-material/Search";
 import { ShoppingBasket } from "@mui/icons-material";
 import { Link, useHistory } from "react-router-dom";
-import { useStateValue } from "./StateProvider";
-import { auth } from "./firebase";
+import { useStateValue } from "../../StateProvider";
+import { auth } from "../../firebase";
 
 function Header() {
   const [{ basket, user }, dipatch] = useStateValue();

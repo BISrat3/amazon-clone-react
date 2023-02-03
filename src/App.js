@@ -1,44 +1,44 @@
-import './App.css';
-import Header from './Header';
-import Home from './Home';
-import Checkout from './Checkout';
-import Payment from './Payment';
-import { BrowserRouter as Router, Route} from "react-router-dom"
-import Login from './Login';
-import { useStateValue } from './StateProvider';
-import { useEffect } from 'react';
-import { auth } from './firebase'
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
-import Orders from './Orders';
+import "./App.css";
+import Header from "./components/Header/Header";
+import Home from "./components/Home/Home";
+import Checkout from "./components/Checkout/Checkout";
+import Payment from "./components/Payment/Payment";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Login from "./components/Login/Login";
+import { useStateValue } from "./StateProvider";
+import { useEffect } from "react";
+import { auth } from "./firebase";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import Orders from "./components/Order/Orders";
 
 const promise = loadStripe(
-  'pk_test_51MSLJnLVu0QffixopawRrFDhPG16T6Lgba7adzKWAeUMz7CW6JBQlWdFTUB7xBzzKTO6il5Q07cCR4lhQyNTXpOp00Z8mlHHqd')
+  "pk_test_51MSLJnLVu0QffixopawRrFDhPG16T6Lgba7adzKWAeUMz7CW6JBQlWdFTUB7xBzzKTO6il5Q07cCR4lhQyNTXpOp00Z8mlHHqd"
+);
 
 function App() {
-  
-  // listener 
-  const [{user}, dispatch] = useStateValue();
-	useEffect(() => {
+  // listener
+  const [{ user }, dispatch] = useStateValue();
+  useEffect(() => {
     // will only runs once when the app component loads...
-    // as soon as we attach this listener - like observer listener 
-		auth.onAuthStateChanged((authUser) => {
-      console.log('The User is >>', authUser)
-			if (authUser) {
+    // as soon as we attach this listener - like observer listener
+    auth.onAuthStateChanged((authUser) => {
+      console.log("The User is >>", authUser);
+      if (authUser) {
         // the user just logged in/ the user was logged in
-				dispatch({
-					type: "SET_USER",
-					user: authUser,
-				});
-			} else {
+        dispatch({
+          type: "SET_USER",
+          user: authUser,
+        });
+      } else {
         // the user is logged out
-				dispatch({
-					type: "SET_USER",
-					user: null,
-				});
-			}
-		});
-	}, []);
+        dispatch({
+          type: "SET_USER",
+          user: null,
+        });
+      }
+    });
+  }, []);
 
   return (
     <Router>
@@ -47,16 +47,16 @@ function App() {
           {/* {Header} */}
           <Header />
           {/* {Home} */}
-          <Home/> 
-        </Route  >
+          <Home />
+        </Route>
         <Route exact path="/login">
-            <Login />
+          <Login />
         </Route>
-        <Route path='/orders'>
+        <Route path="/orders">
           <Header />
-          <Orders/>
+          <Orders />
         </Route>
-        <Route path='/payment'>
+        <Route path="/payment">
           <Header />
           <Elements stripe={promise}>
             <Payment />
@@ -64,7 +64,7 @@ function App() {
         </Route>
         <Route exact path="/Checkout">
           <Header />
-          <Checkout/>
+          <Checkout />
         </Route>
       </div>
     </Router>
